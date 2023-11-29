@@ -1,0 +1,167 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "gpt-avaliation",
+    "description": "technical evaluation",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/question/process-file": {
+      "get": {
+        "tags": [
+          "question"
+        ],
+        "parameters": [
+          {
+            "name": "file_name",
+            "in": "query",
+            "description": "Nome do arquivo na pasta tmp",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "file.json"
+            }
+          }
+        ],
+        "summary": "processa o arquivo do teste",
+        "description": "realiza a leitura do arquivo teste e envia para o gpt processar, após salva no mongo os dados",
+        "responses": {
+          "201": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "data processed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/question/find-ranked": {
+      "get": {
+        "tags": [
+          "question"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Número da página (default: 1)",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Tamanho da página (default: 50)",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "default": 50
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "questions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "$oid": "string"
+                          },
+                          "alternatives": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "answer": {
+                            "type": "string"
+                          },
+                          "concept_graphs_count": {
+                            "type": "integer"
+                          },
+                          "discipline": {
+                            "type": "string"
+                          },
+                          "focus": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "graphs": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "object",
+                                  "properties": {
+                                    "$oid": {
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "question_id": {
+                                  "type": "string"
+                                },
+                                "text": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "image": {
+                            "type": "string"
+                          },
+                          "question_id": {
+                            "type": "string"
+                          },
+                          "requisite_graphs_count": {
+                            "type": "integer"
+                          },
+                          "text": {
+                            "type": "string"
+                          },
+                          "theme": {
+                            "type": "string"
+                          },
+                          "video": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
