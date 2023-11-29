@@ -1,6 +1,6 @@
 .env
 
-!tmp/.gitkeep
 tmp/*
+!tmp/.gitkeep
 
 docker/mongo/data
